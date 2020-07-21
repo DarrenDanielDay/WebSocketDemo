@@ -84,7 +84,6 @@ namespace WebSocketDemo
 
         private async Task Send(WebSocket socket, string message)
         {
-            byte[] buffer = new byte[1 << 12];
             var bytes = Encoding.UTF8.GetBytes(message);
             await socket.SendAsync(bytes, WebSocketMessageType.Text, true, CancellationToken.None);
             Logger.LogInformation($"Sended: {message}");
