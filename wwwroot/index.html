@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        @keyframes
+        ho {
+            from { background: white }
+            to { background: #cccccc }
+        }
+        #button:hover {
+            animation-iteration-count: 1;
+            animation-timing-function: ease-out;
+            animation-name: ho;
+            animation-duration: .3s;
+            animation-delay: 0;
+            animation-fill-mode: forwards;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <input id="input-widget"/>
+        <div id="button" style="border: 1px solid; border-radius: 10px; width: 100px; text-align: center;">send</div>
+        <div>history</div>
+        <ul id="content"></ul>
+    </div>
+    <script>
+        var socket = new WebSocket('ws://localhost:5000');
+        socket.addEventListener("open", function(e) {
+            console.log(e.data);
+        });
+        socket.addEventListener("close", function (e) {
+            console.log(e.data);
+        });
+        socket.addEventListener("error", function (e) {
+            console.log(e.data);
+        });
+        socket.addEventListener("message", function (e) {
+            console.log(e.data);
+            document.getElementById("content").innerHTML += `<li>${e.data}</li>`;
+        });
+        document.getElementById("button").onclick = (e) => {
+            socket.send(document.getElementById("input-widget").value);
+        }
+    </script>
+</body>
+</html>
